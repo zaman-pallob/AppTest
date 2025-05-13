@@ -1,3 +1,4 @@
+import 'package:apptest/core/common_widget/circular_avater.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -28,13 +29,14 @@ class UserRowItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(avaterUrl ?? ''),
+          CircularAvater(
+            imageUrl: avaterUrl ?? "",
+            height: 50.h,
+            width: 50.w,
           ),
           const SizedBox(width: 10),
           Text(
-            name ?? '',
+            name ?? 'N/A',
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
         ],

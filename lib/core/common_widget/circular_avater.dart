@@ -32,7 +32,7 @@ class CircularAvater extends StatelessWidget {
 
   ImageProvider getImage(String imageUrl) {
     try {
-      if (imageUrl == "" || imageUrl.contains("null")) {
+      if (imageUrl == "") {
         return AssetImage(AppImages.avater);
       } else {
         return CachedNetworkImageProvider(imageUrl);
