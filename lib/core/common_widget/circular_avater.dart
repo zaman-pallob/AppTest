@@ -1,3 +1,4 @@
+import 'package:apptest/core/utils/app_colors.dart';
 import 'package:apptest/core/utils/app_images.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,8 @@ class CircularAvater extends StatelessWidget {
       height: height,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          border:
-              Border.all(width: 1.w, color: Colors.teal.withValues(alpha: 0.1)),
+          border: Border.all(
+              width: 1.w, color: AppColors.primaryColor.withValues(alpha: 0.1)),
           image: DecorationImage(
             image: getImage(imageUrl),
             fit: BoxFit.contain,

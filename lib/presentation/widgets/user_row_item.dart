@@ -1,4 +1,6 @@
 import 'package:apptest/core/common_widget/circular_avater.dart';
+import 'package:apptest/core/utils/app_colors.dart';
+import 'package:apptest/core/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,11 +18,11 @@ class UserRowItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.backgroundColor,
         borderRadius: BorderRadius.circular(5.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.4),
+            color: AppColors.lightGray.withValues(alpha: 0.4),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 3), // changes position of shadow
@@ -34,10 +36,18 @@ class UserRowItem extends StatelessWidget {
             height: 50.h,
             width: 50.w,
           ),
-          const SizedBox(width: 10),
-          Text(
-            name ?? 'N/A',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          SizedBox(width: 10.w),
+          Expanded(
+            child: Column(
+              children: [
+                Text(
+                  name ?? 'N/A',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: fw500.copyWith(fontSize: 15.sp),
+                ),
+              ],
+            ),
           ),
         ],
       ),

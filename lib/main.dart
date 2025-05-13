@@ -1,8 +1,11 @@
+import 'package:apptest/core/dependency/dependencies.dart';
 import 'package:apptest/presentation/screens/user_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await init();
   runApp(const MyApp());
 }
 
