@@ -40,49 +40,9 @@ class UserListScreen extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    userProvider.userList == null
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.primaryColor,
-                            ),
-                          )
-                        : (userProvider.userList?.isEmpty ?? false)
-                            ? Center(
-                                child: Text(
-                                "No users avialable",
-                                style: fw400.copyWith(fontSize: 13.sp),
-                              ))
-                            : ListView.builder(
-                                itemCount: userProvider.userList?.length,
-                                controller: userProvider.scrollController,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 15.w, vertical: 5.h),
-                                itemBuilder: (_, index) {
-                                  final userData =
-                                      userProvider.userList?[index];
-                                  return UserRowItem(
-                                    name:
-                                        "${userData?.firstName} ${userData?.lastName}",
-                                    avaterUrl: userData?.avatar ?? "",
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              UserDetailsScreen(
-                                                  userData: userData),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
+                    userListWidget(userProvider, context),
                     userProvider.isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.primaryColor,
-                            ),
-                          )
+                        ? progressWidget()
                         : const SizedBox(),
                   ],
                 ),
@@ -91,6 +51,53 @@ class UserListScreen extends StatelessWidget {
           ],
         );
       }),
+    );
+  }
+
+  Widget userListWidget(UserProvider userProvider, BuildContext context) {
+    if (userProvider.userList == null) {
+      return progressWidget();
+    } else {
+      if (userProvider.userList?.isEmpty ?? true) {
+        return noDataWidget();
+      } else {
+        return ListView.builder(
+          itemCount: userProvider.userList?.length,
+          controller: userProvider.scrollController,
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
+          itemBuilder: (_, index) {
+            final userData = userProvider.userList?[index];
+            return UserRowItem(
+              name: "${userData?.firstName} ${userData?.lastName}",
+              avaterUrl: userData?.avatar ?? "",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserDetailsScreen(userData: userData),
+                  ),
+                );
+              },
+            );
+          },
+        );
+      }
+    }
+  }
+
+  Widget noDataWidget() {
+    return Center(
+        child: Text(
+      "No users avialable",
+      style: fw400.copyWith(fontSize: 14.sp),
+    ));
+  }
+
+  Widget progressWidget() {
+    return const Center(
+      child: CircularProgressIndicator(
+        color: AppColors.primaryColor,
+      ),
     );
   }
 }
