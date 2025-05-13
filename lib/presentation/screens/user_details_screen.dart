@@ -41,6 +41,7 @@ class UserDetailsScreen extends StatelessWidget {
               CachedImage(
                 url: userData?.avatar ?? "",
                 height: 270.h,
+                boxFit: BoxFit.contain,
               ),
               SizedBox(height: 10.h),
               Container(

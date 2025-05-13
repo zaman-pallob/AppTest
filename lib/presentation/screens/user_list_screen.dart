@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants/app_text_style.dart';
+import 'user_details_screen.dart';
 
 class UserListScreen extends StatelessWidget {
   const UserListScreen({super.key});
@@ -27,7 +28,9 @@ class UserListScreen extends StatelessWidget {
         return Column(
           children: [
             SizedBox(height: 10.h),
-            SearchBox(onChanged: (value) {}),
+            SearchBox(onChanged: (value) {
+              userProvider.search(value);
+            }),
             SizedBox(height: 5.h),
             Expanded(
               child: RefreshIndicator(
@@ -62,13 +65,14 @@ class UserListScreen extends StatelessWidget {
                                         "${userData?.firstName} ${userData?.lastName}",
                                     avaterUrl: userData?.avatar ?? "",
                                     onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) =>
-                                      //         UserDetailsScreen(userData: null),
-                                      //   ),
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              UserDetailsScreen(
+                                                  userData: userData),
+                                        ),
+                                      );
                                     },
                                   );
                                 },

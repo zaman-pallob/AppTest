@@ -15,7 +15,7 @@ class UserProvider extends ChangeNotifier {
 
   ScrollController scrollController = ScrollController();
   int currentPage = 1, limit = 10, totalPage = 1;
-  List<UserData>? userList;
+  List<UserData>? userList, tempUserList;
   UserController userController;
 
   UserProvider(this.userController) {
@@ -46,6 +46,7 @@ class UserProvider extends ChangeNotifier {
   refresh() async {
     currentPage = 1;
     userList = null;
+    tempUserList = null;
     isLoading = true;
     await getUserList();
   }
@@ -54,13 +55,38 @@ class UserProvider extends ChangeNotifier {
     UserDataListResponse? response =
         await userController.getUserList(page, limit);
     if (response != null) {
+      currentPage = response.page ?? 1;
+      totalPage = response.totalPages ?? 1;
       if (userList == null) {
         userList = response.data;
       } else {
         userList?.addAll(response.data ?? []);
       }
-      totalPage = response.totalPages ?? 1;
     }
+    tempUserList = userList;
     isLoading = false;
+  }
+
+  search(String query) {
+    if (query.isEmpty) {
+      userList = tempUserList;
+    } else {
+      // Remove special characters from the query string
+      var regxp = RegExp(r'[^\w\s]');
+      String value = RegExp.escape(query.trim().replaceAll(regxp, ''));
+      if (tempUserList?.isNotEmpty ?? false) {
+        userList = tempUserList?.where((user) {
+              //Remove special characters from the name string and convert to lowercase
+              String name = RegExp.escape("${user.firstName} ${user.lastName}"
+                  .replaceAll(regxp, '')
+                  .toLowerCase());
+              // Convert query to lowercase for case-insensitive search
+              return name.contains(value.toLowerCase());
+            }).toList() ??
+            [];
+      }
+    }
+
+    notifyListeners();
   }
 }
