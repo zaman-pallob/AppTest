@@ -1,4 +1,4 @@
-import 'package:apptest/core/utils/app_colors.dart';
+import 'package:apptest/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 const fw300 = TextStyle(

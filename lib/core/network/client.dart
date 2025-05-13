@@ -1,3 +1,4 @@
+import 'package:apptest/core/constants/app_constatnt.dart';
 import 'package:dio/dio.dart';
 
 import '../utils/logger.dart';
@@ -5,10 +6,13 @@ import '../utils/logger.dart';
 class Client {
   static Dio createClient() {
     Dio dio = Dio();
-    dio.options.baseUrl = "https://api.github.com";
+    dio.options.baseUrl = AppConstatnt.baseUrl;
     dio.options.sendTimeout = Duration(seconds: 120);
     dio.options.receiveTimeout = Duration(seconds: 120);
+    dio.options.connectTimeout = Duration(seconds: 120);
     dio.options.headers["accept"] = 'application/json';
+    dio.options.headers["Content-Type"] = 'application/json';
+    dio.options.headers["x-api-key"] = AppConstatnt.apiKey;
     dio.options.contentType = Headers.jsonContentType;
     dio.options.responseType = ResponseType.json;
     dio.options.followRedirects = true;
