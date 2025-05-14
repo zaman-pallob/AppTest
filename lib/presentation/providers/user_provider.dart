@@ -55,15 +55,15 @@ class UserProvider extends ChangeNotifier {
     await Future.delayed(const Duration(seconds: 1));
     var data = await userController.getUserList(page, limit);
 
-    if (data.isDisconnected ?? false) {
+    if ((data.isDisconnected ?? false) && data.userDataListResponse == null) {
       Toasts.showSnackbar(
           "Either no internet connection or internet is too slow to reach the server!!!'",
           () async {
         isLoading = true;
-
         getUserList(page: page);
       });
     }
+
     if (data.userDataListResponse != null) {
       currentPage = data.userDataListResponse?.page ?? 1;
       totalPage = data.userDataListResponse?.totalPages ?? 1;

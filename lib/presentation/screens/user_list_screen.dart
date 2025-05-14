@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/common_widget/error_widget.dart';
 import '../../core/constants/app_text_style.dart';
 import 'user_details_screen.dart';
 
@@ -55,11 +56,19 @@ class UserListScreen extends StatelessWidget {
   }
 
   Widget userListWidget(UserProvider userProvider, BuildContext context) {
-    if (userProvider.userList == null) {
-      return progressWidget();
+    if (userProvider.userList == null && !userProvider.isLoading) {
+      return ErrorViewWidget(
+        onRetry: () {
+          userProvider.refresh();
+        },
+      );
     } else {
-      if (userProvider.userList?.isEmpty ?? true) {
-        return noDataWidget();
+      if ((userProvider.userList?.isEmpty ?? true)) {
+        if (userProvider.isLoading) {
+          return SizedBox.shrink();
+        } else {
+          return noDataWidget();
+        }
       } else {
         return ListView.builder(
           itemCount: userProvider.userList?.length,
