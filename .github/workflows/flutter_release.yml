@@ -2,8 +2,8 @@ name: Flutter Release Build
 
 on:
   push:
-    tags:
-      - '*.*.*'  # Trigger on version tags like v1.0.0
+    branches:
+      - main
 
 jobs:
   release:
