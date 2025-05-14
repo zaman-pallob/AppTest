@@ -4,11 +4,11 @@ class ExceptionMessage {
   static String getMessage(DioException exception) {
     switch (exception.type) {
       case DioExceptionType.connectionError:
-        return "Connection error!!";
+        return "No internet or server does not exist!!";
       case DioExceptionType.connectionTimeout:
-        return "Connection timeout!!";
+        return "Internet is too slow to connect with server with in allotted time!!";
       case DioExceptionType.receiveTimeout:
-        return "Recieve timeout!!";
+        return "Response from server taking too long to recieve!!";
       case DioExceptionType.sendTimeout:
         return "Sent timeout!!";
       case DioExceptionType.badResponse:

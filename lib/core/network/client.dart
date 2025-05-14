@@ -1,28 +1,22 @@
+import 'package:apptest/core/constants/app_constatnt.dart';
 import 'package:dio/dio.dart';
 
 import '../utils/logger.dart';
 
 class Client {
-  static final Client _client = Client._internal();
-  static Dio? dio;
-  factory Client() {
-    if (dio == null) {
-      initializeDio();
-    }
-    return _client;
-  }
-  Client._internal();
-
-  static Future initializeDio() async {
-    dio = Dio();
-
-    dio?.options.sendTimeout = Duration(seconds: 120);
-    dio?.options.receiveTimeout = Duration(seconds: 120);
-    dio?.options.headers["accept"] = 'application/json';
-    dio?.options.contentType = Headers.jsonContentType;
-    dio?.options.responseType = ResponseType.json;
-    dio?.options.followRedirects = true;
-    dio?.interceptors.add(InterceptorsWrapper(
+  static Dio createClient() {
+    Dio dio = Dio();
+    dio.options.baseUrl = AppConstatnt.baseUrl;
+    dio.options.sendTimeout = Duration(seconds: 120);
+    dio.options.receiveTimeout = Duration(seconds: 120);
+    dio.options.connectTimeout = Duration(seconds: 120);
+    dio.options.headers["accept"] = 'application/json';
+    dio.options.headers["Content-Type"] = 'application/json';
+    dio.options.headers["x-api-key"] = AppConstatnt.apiKey;
+    dio.options.contentType = Headers.jsonContentType;
+    dio.options.responseType = ResponseType.json;
+    dio.options.followRedirects = true;
+    dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         // var map = {
         //   "Category": "New Request",
@@ -57,5 +51,6 @@ class Client {
         handler.next(err);
       },
     ));
+    return dio;
   }
 }
