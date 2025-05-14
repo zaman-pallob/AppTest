@@ -52,6 +52,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future getUserList({int page = 1}) async {
+    await Future.delayed(const Duration(seconds: 1));
     var data = await userController.getUserList(page, limit);
 
     if (data.isDisconnected ?? false) {
@@ -59,7 +60,7 @@ class UserProvider extends ChangeNotifier {
           "Either no internet connection or internet is too slow to reach the server!!!'",
           () async {
         isLoading = true;
-        await Future.delayed(const Duration(seconds: 2));
+
         getUserList(page: page);
       });
     }
