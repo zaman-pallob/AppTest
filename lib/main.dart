@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'presentation/providers/user_provider.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init();
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           builder: (_, child) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
+              navigatorKey: navigatorKey,
               theme: ThemeData(
                 colorScheme:
                     ColorScheme.fromSeed(seedColor: AppColors.primaryColor),

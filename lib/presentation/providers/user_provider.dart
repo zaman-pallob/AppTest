@@ -52,15 +52,24 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future getUserList({int page = 1}) async {
-    UserDataListResponse? response =
-        await userController.getUserList(page, limit);
-    if (response != null) {
-      currentPage = response.page ?? 1;
-      totalPage = response.totalPages ?? 1;
+    var data = await userController.getUserList(page, limit);
+
+    if (data.isDisconnected ?? false) {
+      Toasts.showSnackbar(
+          "Either no internet connection or internet is too slow to reach the server!!!'",
+          () {
+        isLoading = true;
+        getUserList(page: page);
+      });
+    }
+
+    if (data.userDataListResponse != null) {
+      currentPage = data.userDataListResponse?.page ?? 1;
+      totalPage = data.userDataListResponse?.totalPages ?? 1;
       if (userList == null) {
-        userList = response.data;
+        userList = data.userDataListResponse?.data ?? [];
       } else {
-        userList?.addAll(response.data ?? []);
+        userList?.addAll(data.userDataListResponse?.data ?? []);
       }
     }
     tempUserList = userList;
