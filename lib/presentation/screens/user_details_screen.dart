@@ -33,43 +33,47 @@ class UserDetailsScreen extends StatelessWidget {
         ),
       ),
       body: Consumer<UserProvider>(builder: (context, provider, child) {
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(5.r),
+        return SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(5.r),
+                  ),
+                  child: CachedImage(
+                    url: userData?.avatar ?? "",
+                    height: 270.h,
+                    boxFit: BoxFit.contain,
+                  ),
                 ),
-                child: CachedImage(
-                  url: userData?.avatar ?? "",
-                  height: 270.h,
-                  boxFit: BoxFit.contain,
-                ),
-              ),
-              SizedBox(height: 10.h),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(5.r),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    textRow("Id:", userData?.id.toString() ?? ""),
-                    textRow("Name:",
-                        "${userData?.firstName} ${userData?.lastName}"),
-                    textRow("Email:", "${userData?.email}"),
-                    textRow("Phone:", "N/A"),
-                  ],
-                ),
-              )
-            ],
+                SizedBox(height: 10.h),
+                Container(
+                  width: double.infinity,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(5.r),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      textRow("Id:", userData?.id.toString() ?? ""),
+                      textRow("Name:",
+                          "${userData?.firstName} ${userData?.lastName}"),
+                      textRow("Email:", "${userData?.email}"),
+                      textRow("Phone:", "N/A"),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         );
       }),
