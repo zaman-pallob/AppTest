@@ -24,6 +24,7 @@ class UserDataSources {
           userDataEntity.userDataListResponse = userDataListResponse;
           return userDataEntity;
         } catch (e) {
+          // Handle JSON parsing error
           Toasts.show('Error: ${e.toString()}');
           userDataEntity.userDataListResponse = null;
           return userDataEntity;
@@ -38,6 +39,7 @@ class UserDataSources {
       }
     } catch (e) {
       if (e is DioException) {
+        // Handle DioException
         String message = ExceptionMessage.getMessage(e);
         if (e.type == DioExceptionType.connectionError) {
           userDataEntity.isDisconnected = true;
@@ -47,6 +49,7 @@ class UserDataSources {
         userDataEntity.userDataListResponse = null;
         return userDataEntity;
       } else {
+        // Handle other exceptions
         Toasts.show(e.toString());
         userDataEntity.userDataListResponse = null;
         return userDataEntity;

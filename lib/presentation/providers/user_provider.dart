@@ -57,12 +57,12 @@ class UserProvider extends ChangeNotifier {
     if (data.isDisconnected ?? false) {
       Toasts.showSnackbar(
           "Either no internet connection or internet is too slow to reach the server!!!'",
-          () {
+          () async {
         isLoading = true;
+        await Future.delayed(const Duration(seconds: 2));
         getUserList(page: page);
       });
     }
-
     if (data.userDataListResponse != null) {
       currentPage = data.userDataListResponse?.page ?? 1;
       totalPage = data.userDataListResponse?.totalPages ?? 1;

@@ -38,16 +38,26 @@ class UserDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CachedImage(
-                url: userData?.avatar ?? "",
-                height: 270.h,
-                boxFit: BoxFit.contain,
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(5.r),
+                ),
+                child: CachedImage(
+                  url: userData?.avatar ?? "",
+                  height: 270.h,
+                  boxFit: BoxFit.contain,
+                ),
               ),
               SizedBox(height: 10.h),
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-                color: AppColors.white,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(5.r),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -69,6 +79,7 @@ class UserDetailsScreen extends StatelessWidget {
   Widget textRow(String title, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 1,
